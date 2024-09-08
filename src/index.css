@@ -1,0 +1,85 @@
+/* body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+} */
+
+/* src/index.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;700;900&family=Noto+Sans:wght@400;500;700;900&display=swap');
+
+body {
+  font-family: 'Epilogue', 'Noto Sans', sans-serif;
+}
+
+.user-screen, .employee-screen {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.menu, .order-summary, .order-list {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.menu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.drink-item {
+  width: 100px;
+  margin: 10px;
+  text-align: center;
+}
+
+.drink-item button {
+  margin-top: 10px;
+}
+
+.bottom-nav {
+  display: flex;
+  justify-content: space-around;
+  background-color: #222;
+  color: white;
+  padding: 10px 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.bottom-nav a {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.bottom-nav a:hover {
+  text-decoration: underline;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .drink-item {
+    width: 80px;
+  }
+
+  .menu, .order-summary, .order-list {
+    padding: 10px;
+  }
+
+  .bottom-nav a {
+    font-size: 14px;
+  }
+}
