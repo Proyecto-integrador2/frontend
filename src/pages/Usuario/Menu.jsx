@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import Navbar from '../components/Navbar';
-import DrinkItem from '../components/DrinkItem';
-import { getProductos } from '../utils/api';
+import Navbar from '../../components/Navbar';
+import DrinkItem from '../../components/DrinkItem';
+import { getProductos } from '../../utils/api';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Order from './Order'; 

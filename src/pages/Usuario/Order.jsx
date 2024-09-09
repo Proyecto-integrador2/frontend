@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import OrderList from '../components/OrderList';
-import Navbar from '../components/Navbar';
+import OrderList from '../../components/OrderList';
+import Navbar from '../../components/Navbar';
 
 const Order = () => {
   const [order, setOrder] = useState({ items: [] });
