@@ -29,13 +29,13 @@ const Menu = () => {
   }, []);
 
   const handleAddToOrder = (drink) => {
-    const newItem = { ...drink, id: Date.now() };
+    const newItem = { ...drink, id: Date.now(), quantity: 1 };
     const updatedOrder = { items: [...order.items, newItem] };
-    
+  
     setOrder(updatedOrder);
     localStorage.setItem('order', JSON.stringify(updatedOrder));
     toast.success(`${drink.name} added to order!`);
-  };
+  };  
 
   return (
     <div className="relative flex flex-col min-h-screen bg-[#fcf9f8] justify-between overflow-x-hidden" style={{ fontFamily: "Epilogue, Noto Sans, sans-serif" }}>
