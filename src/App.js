@@ -4,6 +4,7 @@ import Menu from './pages/Menu';
 import Order from './pages/Order';
 import Orders from './pages/Orders';
 import DetailOrder from './pages/DetailOrder';
+import PendingOrders from './pages/Employee/PendingOrders';
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
         <Route path="/order" element={<Order order={{ items: [] }} />} />
         <Route path="/orders" element={<Orders orders={[]} />} />
         <Route path="/orders/:id" element={<DetailOrder order={{ items: [] }} />} />
+        <Route path="/employee/orders" element={<PendingOrders />} />
       </Routes>
     </Router>
   );
