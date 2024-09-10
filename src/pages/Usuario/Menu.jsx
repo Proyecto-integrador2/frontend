@@ -71,7 +71,7 @@ const Menu = () => {
         </div>
       </div>
       <div className="right-side">
-        <Order order={order} />
+        <Order order={order} setOrder={setOrder} />
       </div>
       <Navbar />
       <ToastContainer />

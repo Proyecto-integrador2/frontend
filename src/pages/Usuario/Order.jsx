@@ -1,22 +1,15 @@
+// src/pages/Usuario/Order.jsx
 import React, { useState, useEffect } from 'react';
 import OrderList from '../../components/OrderList';
 import Navbar from '../../components/Navbar';
 
-const Order = () => {
-  const [order, setOrder] = useState({ items: [] });
+const Order = ({ order, setOrder }) => {
   const [notes, setNotes] = useState('');
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    const storedOrder = JSON.parse(localStorage.getItem('order')) || { items: [] };
-    setOrder(storedOrder);
-    calculateTotal(storedOrder.items);
-  }, []);
-
-  const calculateTotal = (items) => {
-    const newTotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    setTotal(newTotal);
-  };
+    setTotal(order.items.reduce((sum, item) => sum + item.price * item.quantity, 0));
+  }, [order.items]);
 
   const handleQuantityChange = (id, newQuantity) => {
     const updatedItems = order.items.map((item) =>
@@ -25,7 +18,6 @@ const Order = () => {
     const updatedOrder = { ...order, items: updatedItems };
     setOrder(updatedOrder);
     localStorage.setItem('order', JSON.stringify(updatedOrder));
-    calculateTotal(updatedItems);
   };
 
   const handleRemoveItem = (id) => {
@@ -33,7 +25,6 @@ const Order = () => {
     const updatedOrder = { ...order, items: updatedItems };
     setOrder(updatedOrder);
     localStorage.setItem('order', JSON.stringify(updatedOrder));
-    calculateTotal(updatedItems);
   };
 
   const handleNotesChange = (e) => {
@@ -43,7 +34,11 @@ const Order = () => {
   return (
     <div className="p-4 pb-24">
       <Navbar />
-      <OrderList items={order.items} onRemove={handleRemoveItem} onQuantityChange={handleQuantityChange} />
+      <OrderList 
+        items={order.items} 
+        onRemove={handleRemoveItem} 
+        onQuantityChange={handleQuantityChange} 
+      />
       <div className="mt-4">
         <textarea
           placeholder="Add notes to your order..."
