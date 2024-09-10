@@ -3,15 +3,24 @@ import React from 'react';
 const CardOrder = ({ order }) => {
   return (
     <div className="pedido-card">
-      <h2>Mesa {order.mesa}</h2>
-      <ul>
+      <h2>Mesa {order.mesa_numero}</h2>
+      <ul className="pedido-detalles">
         {order.detalles.map((detail) => (
-          <li key={order.id_detalle_pedido}>
-            {detail.producto.nombre} x{detail.cantidad} - {detail.comentarios ? `Comentarios: ${detail.comentarios}` : 'Sin comentarios'}
+          <li key={detail.id_detalle_pedido} className="pedido-detalle-item">
+            <img
+              src={detail.producto_imagen}
+              alt={detail.producto_nombre}
+              className="producto-imagen"
+            />
+            <div className="detalle-info">
+              <p><strong>{detail.producto_nombre}</strong></p>
+              <p>Cantidad: {detail.cantidad}</p>
+              {detail.comentarios && <p>Comentarios: {detail.comentarios}</p>}
+            </div>
           </li>
         ))}
       </ul>
-      <p>Estado: {order.estado}</p>
+      <p><strong>Estado:</strong> {order.estado}</p>
     </div>
   );
 };

@@ -10,9 +10,10 @@ const PendingOrders = () => {
     try {
       const response = await fetch('http://127.0.0.1:8000/api/pedidos/');
       const data = await response.json();
+      console.log(data);
       // Filtrar solo los pedidos con estado 'pendiente'
-      const pendingOrders = data.filter(order => order.estado === 'pendiente');
-      setOrders(pendingOrders);
+      //const pendingOrders = data.filter(order => order.estado === 'pendiente'); FILTRADOS DESDE EL BACK
+      setOrders(data);
     } catch (error) {
       console.error('Error al obtener pedidos:', error);
     }
@@ -22,7 +23,7 @@ const PendingOrders = () => {
     fetchPendingOrders();
 
     // Consultar cada 5 seg
-    const intervalId = setInterval(fetchPendingOrders, 5000);
+    const intervalId = setInterval(fetchPendingOrders, 60000);
 
     // Limpiar el intervalo cuando el componente se desmonte
     return () => clearInterval(intervalId);

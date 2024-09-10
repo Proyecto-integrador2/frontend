@@ -1,26 +1,52 @@
 .pedidos-container {
-    padding: 20px;
-    background-color: #f9f9f9;
-  }
-  
-  .pedido-card {
-    background-color: #fff;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    margin-bottom: 15px;
-  }
-  
-  .pedido-card h2 {
-    margin-bottom: 5px;
-  }
-  
-  .pedido-card ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .pedido-card ul li {
-    margin-bottom: 5px;
-  }
-  
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.pedido-card {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.pedido-detalles {
+  list-style-type: none;
+  padding: 0;
+}
+
+.pedido-detalle-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+
+.producto-imagen {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.detalle-info {
+  display: flex;
+  flex-direction: column;
+}
+
+h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+p {
+  margin: 0;
+}
+
+.pedido-card p {
+  font-size: 14px;
+}
