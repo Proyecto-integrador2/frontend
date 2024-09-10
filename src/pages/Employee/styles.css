@@ -1,52 +1,152 @@
-.pedidos-container {
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
 .pedido-card {
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  padding: 16px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin-bottom: 20px;
+  transition: transform 0.3s ease-in-out;
+  max-width: 100%;
 }
 
-.pedido-detalles {
-  list-style-type: none;
-  padding: 0;
+.pedido-card:hover {
+  transform: scale(1.02);
 }
 
-.pedido-detalle-item {
+.pedido-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.pedido-fecha {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.pedido-fecha .hora {
+  font-weight: bold;
+  color: #000;
+}
+
+.mesa-numero {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.estado-label {
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.pedido-content {
+  padding: 15px;
+}
+
+.detalle-item {
   display: flex;
   align-items: center;
-  gap: 16px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .producto-imagen {
-  width: 60px;
-  height: 60px;
-  border-radius: 8px;
+  width: 80px;
+  height: 80px;
   object-fit: cover;
+  border-radius: 8px;
+  margin-right: 15px;
 }
 
-.detalle-info {
-  display: flex;
-  flex-direction: column;
-}
-
-h2 {
+.detalle-info h4 {
   margin: 0;
-  font-size: 24px;
+  font-size: 1.2rem;
+  color: #030303;
+}
+
+.detalle-info p {
+  margin: 5px 0;
+  color: #666;
+}
+
+.pedido-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 15px;
+  background-color: #f1f1f1;
+}
+
+.estado-btn {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.estado-btn:hover {
+  background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+  .pedido-card {
+    flex-direction: column;
+  }
+
+  .producto-imagen {
+    width: 100%;
+    height: 100%;
+  }
+
+  .estado-btn {
+    width: 100%;
+    margin-top: 10px;
+  }
+}
+
+.pending-orders-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.title {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.orders-grid {
+  display: flex;
+  flex-direction: column; /* Coloca todas las tarjetas en una columna */
+  gap: 20px; /* Espacio entre las tarjetas */
+}
+
+@media (min-width: 768px) {
+  .orders-grid {
+    flex-direction: row; /* En pantallas grandes, se distribuyen en filas */
+    flex-wrap: wrap; /* Permite que las tarjetas se envuelvan */
+    justify-content: center; /* Centra las tarjetas en la pantalla */
+  }
+
+  .orders-grid > * {
+    flex: 1 1 600px; /* Asegura que cada tarjeta ocupe todo el ancho disponible en pantallas medianas */
+    max-width: 100%; /* Evita que las tarjetas excedan el tamaño máximo del contenedor */
+  }
 }
 
 p {
-  margin: 0;
-}
-
-.pedido-card p {
-  font-size: 14px;
+  text-align: left;
+  font-size: 1.2rem;
+  color: #777;
 }
