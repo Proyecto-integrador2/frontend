@@ -32,7 +32,8 @@ const Menu = () => {
   }, []);
 
   const handleAddToOrder = (drink) => {
-    const newItem = { ...drink, id: Date.now(), quantity: 1 };
+    console.log(drink)
+    const newItem = { ...drink, id: drink.idProduct, quantity: 1};
     const updatedOrder = { items: [...order.items, newItem] };
 
     setOrder(updatedOrder);
@@ -58,6 +59,7 @@ const Menu = () => {
             filteredProductos.map(product => (
               <DrinkItem
                 key={product.id_producto}
+                idProduct={product.id_producto}
                 name={product.nombre}
                 ingredients={product.ingredientes}
                 price={product.precio}
