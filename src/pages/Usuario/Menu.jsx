@@ -1,14 +1,18 @@
+// src/pages/Usuario/Menu.jsx
 import React, { useEffect, useState } from 'react';
 import Navbar from '../../components/Navbar';
 import DrinkItem from '../../components/DrinkItem';
 import { getProductos } from '../../utils/api';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Order from './Order'; 
+import Order from './Order';
+import SearchBar from '../../components/SearchBar';
+import './Menu.css';
 
 const Menu = () => {
   const [productos, setProductos] = useState([]);
   const [order, setOrder] = useState({ items: [] });
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const fetchProductos = async () => {
@@ -23,7 +27,6 @@ const Menu = () => {
   }, []);
 
   useEffect(() => {
-    // Recupera la orden almacenada en el localStorage al inicializar
     const storedOrder = JSON.parse(localStorage.getItem('order')) || { items: [] };
     setOrder(storedOrder);
   }, []);
@@ -32,33 +35,47 @@ const Menu = () => {
     console.log(drink)
     const newItem = { ...drink, id: drink.idProduct, quantity: 1};
     const updatedOrder = { items: [...order.items, newItem] };
-  
+
     setOrder(updatedOrder);
     localStorage.setItem('order', JSON.stringify(updatedOrder));
     toast.success(`${drink.name} added to order!`);
-  };  
+  };
+
+  const filteredProductos = productos.filter(product =>
+    product.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
-    <div className="relative flex flex-col min-h-screen bg-[#fcf9f8] justify-between overflow-x-hidden" style={{ fontFamily: "Epilogue, Noto Sans, sans-serif" }}>
-      <Navbar />
-      <div className="p-4 bg-[#fcf9f8]">
-        {productos.length > 0 ? (
-          productos.map(product => (
-            <DrinkItem
-              key={product.id_producto}
-              idProduct={product.id_producto}
-              name={product.nombre}
-              ingredients={product.ingredientes}
-              price={product.precio}
-              imgUrl={product.imagen_url}
-              onAddToOrder={handleAddToOrder}
-            />
-          ))
-        ) : (
-          <p>Loading products...</p>
-        )}
+    <div className="menu-container">
+      <div className="left-side">
+        <div className="search-bar-container">
+          <SearchBar 
+            searchTerm={searchTerm}
+            onSearchChange={setSearchTerm} 
+          />
+        </div>
+        <div className="product-list">
+          {filteredProductos.length > 0 ? (
+            filteredProductos.map(product => (
+              <DrinkItem
+                key={product.id_producto}
+                idProduct={product.id_producto}
+                name={product.nombre}
+                ingredients={product.ingredientes}
+                price={product.precio}
+                imgUrl={product.imagen_url}
+                onAddToOrder={handleAddToOrder}
+              />
+            ))
+          ) : (
+            <p>No products found.</p>
+          )}
+        </div>
       </div>
-      <Order order={order} />
+      <div className="right-side">
+        <Order order={order} setOrder={setOrder} />
+      </div>
+      <Navbar />
       <ToastContainer />
     </div>
   );
