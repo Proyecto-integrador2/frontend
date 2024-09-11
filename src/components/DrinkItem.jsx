@@ -1,6 +1,6 @@
 import React from 'react';
 
-const DrinkItem = ({ name, ingredients, price, imgUrl, onAddToOrder }) => (
+const DrinkItem = ({ idProduct, name, ingredients, price, imgUrl, onAddToOrder }) => (
   <div className="flex flex-col md:flex-row items-stretch justify-between gap-4 rounded-xl mb-4 shadow-lg bg-white">
     <div className="w-full md:w-1/3 rounded-xl overflow-hidden">
       <div className="aspect-square w-full h-full">
@@ -22,7 +22,7 @@ const DrinkItem = ({ name, ingredients, price, imgUrl, onAddToOrder }) => (
         className="bg-purple-500 text-white rounded-full h-10 px-6 text-sm font-medium mt-2 self-start md:self-end"
         onClick={() => {
           if (typeof onAddToOrder === 'function') {
-            onAddToOrder({ name, ingredients, price, imgUrl });
+            onAddToOrder({ idProduct, name, ingredients, price, imgUrl });
           } else {
             console.error('onAddToOrder is not a function');
           }

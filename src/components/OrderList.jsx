@@ -1,7 +1,7 @@
 import React from 'react';
 import OrderItem from './OrderItem';
 
-const OrderList = ({ items, onRemove, onQuantityChange }) => {
+const OrderList = ({ items, onRemove, onQuantityChange, onNotesChange }) => {
   if (!Array.isArray(items)) {
     console.error('Expected items to be an array, but got:', items);
     return <p>There was an error loading the order items.</p>;
@@ -11,7 +11,7 @@ const OrderList = ({ items, onRemove, onQuantityChange }) => {
     <div className="p-4">
       {items.length > 0 ? (
         items.map((item) => (
-          <OrderItem key={item.id} item={item} onRemove={onRemove} onQuantityChange={onQuantityChange} />
+          <OrderItem key={item.id} item={item} onRemove={onRemove} onQuantityChange={onQuantityChange} onNotesChange={onNotesChange} />
         ))
       ) : (
         <p>Your order is empty.</p>
