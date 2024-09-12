@@ -2,11 +2,9 @@ import React, { useState, useEffect } from "react";
 import OrderList from "../../components/OrderList";
 import Navbar from "../../components/Navbar";
 import { postOrder, getMesaId } from "../../utils/api";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
-const Order = () => {
-  const [order, setOrder] = useState({ items: [] });
+const Order = ({ order, setOrder }) => {
   const [notes, setNotes] = useState("");
   const [total, setTotal] = useState(0);
   const [tableId, setTableId] = useState();
@@ -14,18 +12,14 @@ const Order = () => {
   const tableWithId = 7;
 
   useEffect(() => {
-    const storedOrder = JSON.parse(localStorage.getItem("order")) || {
-      items: [],
-    };
-    setOrder(storedOrder);
-    calculateTotal(storedOrder.items);
+    calculateTotal(order.items);
 
     const fetchTable = async () => {
       const table = await getMesaId(tableWithId);
       setTableId(table.id_mesa);
     };
     fetchTable();
-  }, []);
+  }, [order]);
 
   const calculateTotal = (items) => {
     const newTotal = items.reduce(
@@ -109,7 +103,6 @@ const Order = () => {
       >
         Place Order
       </button>
-      <ToastContainer />
     </div>
   );
 };
