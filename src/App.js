@@ -7,22 +7,25 @@ import PendingOrders from './pages/Employee/PendingOrders';
 import Login from './pages/Login/Login';
 import PrivateRoute from './utils/privateRoute';
 import AuthProvider from './utils/auth';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
 
   return (
     <AuthProvider>
-    <Router>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/" element={<Menu drinks={[]} />} />
-        <Route path="/menu" element={<Menu drinks={[]} />} />
-        <Route path="/order" element={<Order order={{ items: [] }} />} />
-        <Route path="/orders" element={<Orders orders={[]} />} />
-        <Route path="/orders/:id" element={<DetailOrder order={{ items: [] }} />} />
+      <ToastContainer/>
+      <Router>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Menu drinks={[]} />} />
+          <Route path="/menu" element={<Menu drinks={[]} />} />
+          <Route path="/order" element={<Order order={{ items: [] }} />} />
+          <Route path="/orders" element={<Orders orders={[]} />} />
+          <Route path="/orders/:id" element={<DetailOrder order={{ items: [] }} />} />
         
-        {/* Rutas privadas */}
-        <Route
+          {/* Rutas privadas */}
+          <Route
             path="/employee/orders"
             element={
               <PrivateRoute>
@@ -30,8 +33,8 @@ const App = () => {
               </PrivateRoute>
             }
           />
-      </Routes>
-    </Router>
+        </Routes>
+      </Router>
     </AuthProvider>
   );
 };
