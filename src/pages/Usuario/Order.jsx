@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import OrderList from '../../components/OrderList';
 import Navbar from '../../components/Navbar';
 import { postOrder, getMesaId } from '../../utils/api';
+import { toast } from 'react-toastify';
 
 const Order = () => {
   const [order, setOrder] = useState({ items: [] });
@@ -74,6 +75,10 @@ const Order = () => {
       "detalles": orderDetails
     }
     postOrder(orderData)
+    toast.success("Your order has been successfully sent!");
+      setTimeout(function(){
+        window.location.reload();
+      }, 5000);
   }
 
   return (
