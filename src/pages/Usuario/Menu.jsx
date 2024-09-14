@@ -28,16 +28,22 @@ const Menu = () => {
   useEffect(() => {
     const storedOrder = JSON.parse(localStorage.getItem('order')) || { items: [] };
     setOrder(storedOrder);
-  }, []);
+  }, [order]);
 
   const handleAddToOrder = (drink) => {
-    console.log(drink)
-    const newItem = { ...drink, id: drink.idProduct, quantity: 1};
-    const updatedOrder = { items: [...order.items, newItem] };
-
-    setOrder(updatedOrder);
-    localStorage.setItem('order', JSON.stringify(updatedOrder));
-    toast.success(`${drink.name} added to order!`);
+    if (!order.items.some(item => item.idProduct === drink.idProduct)) {
+      const newItem = { ...drink, id: drink.idProduct, quantity: 1 };
+      const updatedOrder = { items: [...order.items, newItem] };
+  
+      setOrder(updatedOrder);
+      localStorage.setItem('order', JSON.stringify(updatedOrder));
+      toast.success(`adding ${drink.name} to order!`, { autoClose: 3000 } );
+      setTimeout(function(){
+        window.location.reload();
+      }, 2000);
+    } else {
+      toast.info(`${drink.name} is already in the order!`, { autoClose: 3000 });
+    }
   };
 
   const filteredProductos = productos.filter(product =>
