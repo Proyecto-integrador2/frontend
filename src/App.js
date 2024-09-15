@@ -16,8 +16,8 @@ const App = () => {
   return (
     <AuthProvider>
       <OrderProvider>
-      <ToastContainer/>
       <Router>
+      <ToastContainer/>
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Menu drinks={[]} />} />
