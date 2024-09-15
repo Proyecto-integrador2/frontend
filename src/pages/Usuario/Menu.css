@@ -1,94 +1,91 @@
-/* src/pages/Usuario/Menu.css */
-
 /* Estilos generales para la vista en PC */
 .menu-container {
-    display: flex;
-    height: 100vh;
+  display: flex;
+  height: 100vh;
+}
+
+.left-side {
+  flex: 2.5;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  border-right: 1px solid #e8d5ce;
+}
+
+.right-side {
+  flex: 1.5;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.search-bar-container {
+  position: sticky;
+  top: 0;
+  background: #fcf9f8;
+  border-bottom: 1px solid #e8d5ce;
+  z-index: 10;
+  padding: 16px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px;
+  font-size: 1.2rem;
+  line-height: 1.5; /* Espacio entre líneas del input de búsqueda */
+  border: 1px solid #e8d5ce;
+  border-radius: 4px;
+}
+
+.product-list {
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.product-list p {
+  font-size: 1.6rem;
+  line-height: 1.6; /* Mayor espacio entre líneas de texto en la lista */
+}
+
+/* Estilo para las imágenes de los cócteles */
+.drink-item img {
+  max-width: 120px;
+  height: auto;
+  object-fit: cover;
+}
+
+.drink-item {
+  font-size: 1.4rem;
+  line-height: 1.6; /* Mayor espacio entre líneas en los ítems de bebida */
+}
+
+.right-side p {
+  font-size: 1.8rem;
+  line-height: 1.6; /* Espacio entre líneas en la sección de pedidos */
+}
+
+/* Estilos para la vista en móvil */
+@media (max-width: 768px) {
+  .menu-container {
+    flex-direction: column;
   }
-  
+
   .left-side {
-    flex: 3;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto; /* Permite el desplazamiento vertical */
-    border-right: 1px solid #e8d5ce;
-  }
-  
-  .right-side {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    padding: 16px;
-    overflow-y: auto; /* Permite el desplazamiento vertical */
-  }
-  
-  .search-bar-container {
-    position: sticky;
-    top: 0;
-    background: #fcf9f8;
-    border-bottom: 1px solid #e8d5ce;
-    z-index: 10;
-    padding: 16px;
-  }
-  
-  .search-input {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #e8d5ce;
-    border-radius: 4px;
-  }
-  
-  .product-list {
-    padding: 16px;
+    flex: none;
     overflow-y: auto;
+    padding-bottom: 56px; /* Espacio para el navbar en la parte inferior */
   }
-  
-  /* Estilo para las imágenes de los cócteles */
-  .drink-item img {
-    max-width: 100px; /* Ajusta el tamaño de las imágenes */
-    height: auto;
-    object-fit: cover;
+
+  .right-side {
+    display: none;
   }
-  
-  /* Estilos para el navbar */
-  .navbar {
+
+  .search-bar-container {
     position: fixed;
-    bottom: 0;
+    top: 0;
     left: 0;
     right: 0;
     z-index: 20;
   }
-  
-  /* Estilos para la vista en móvil */
-  @media (max-width: 768px) {
-    .menu-container {
-      flex-direction: column;
-    }
-  
-    .left-side {
-      flex: none;
-      overflow-y: auto;
-      padding-bottom: 56px; /* Espacio para el navbar en la parte inferior */
-    }
-  
-    .right-side {
-      display: none;
-    }
-  
-    .search-bar-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 20;
-    }
-  
-    .navbar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      z-index: 20;
-    }
-  }
-  
+}

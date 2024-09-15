@@ -7,6 +7,7 @@ import PendingOrders from './pages/Employee/PendingOrders';
 import Login from './pages/Login/Login';
 import PrivateRoute from './utils/privateRoute';
 import AuthProvider from './utils/auth';
+import { OrderProvider } from './context/OrderContext';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -14,6 +15,7 @@ const App = () => {
 
   return (
     <AuthProvider>
+      <OrderProvider>
       <ToastContainer/>
       <Router>
         <Routes>
@@ -35,6 +37,7 @@ const App = () => {
           />
         </Routes>
       </Router>
+      </OrderProvider>
     </AuthProvider>
   );
 };

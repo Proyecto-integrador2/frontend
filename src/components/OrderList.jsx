@@ -11,7 +11,13 @@ const OrderList = ({ items, onRemove, onQuantityChange, onNotesChange }) => {
     <div className="p-4">
       {items.length > 0 ? (
         items.map((item) => (
-          <OrderItem key={item.id} item={item} onRemove={onRemove} onQuantityChange={onQuantityChange} onNotesChange={onNotesChange} />
+          <OrderItem
+            key={item.id}
+            item={item}
+            onRemove={onRemove}
+            onQuantityChange={onQuantityChange}
+            onNotesChange={onNotesChange}
+          />
         ))
       ) : (
         <p>Your order is empty.</p>
