@@ -80,11 +80,16 @@ const Order = () => {
       "detalles": orderDetails
     };
 
-    await postOrder(orderData);
-    toast.success("Your order has been successfully sent!");
-    localStorage.removeItem('order');
-    updateOrder({ ...order, items: [] });
-    calculateTotal([]);
+    try {
+      await postOrder(orderData);
+      toast.success("Your order has been successfully sent!");
+      localStorage.removeItem('order');
+      updateOrder({ ...order, items: [] });
+      calculateTotal([]);
+    } catch (error) {
+      toast.error("Your order couldn't be sent, please try again!");
+    }
+    
     // window.location.reload();
   };
 
