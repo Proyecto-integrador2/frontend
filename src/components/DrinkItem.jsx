@@ -19,7 +19,7 @@ const DrinkItem = ({ idProduct, name, ingredients, price, imgUrl, onAddToOrder }
         <p className="text-[#9c5e49] text-sm font-bold">Price: ${price}</p>
       </div>
       <button
-        className="bg-purple-500 text-white rounded-full h-10 px-6 text-sm font-medium mt-2 self-start md:self-end"
+        className="bg-purple-500 text-white rounded-full h-14 px-8 text-2xl font-semibold mt-4 self-start md:self-end"
         onClick={() => {
           if (typeof onAddToOrder === 'function') {
             onAddToOrder({ idProduct, name, ingredients, price, imgUrl });

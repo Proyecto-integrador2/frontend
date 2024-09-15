@@ -1,17 +1,18 @@
-// src/pages/Usuario/Menu.jsx
-import React, { useEffect, useState } from 'react';
-import Navbar from '../../components/Navbar';
+// Menu.jsx
+import React, { useEffect, useState, useContext } from 'react';
 import DrinkItem from '../../components/DrinkItem';
 import { getProductos } from '../../utils/api';
 import { toast } from 'react-toastify';
-import Order from './Order';
 import SearchBar from '../../components/SearchBar';
+import { OrderContext } from '../../context/OrderContext';
 import './Menu.css';
+import Order from './Order'
+import Navbar from '../../components/Navbar';
 
 const Menu = () => {
   const [productos, setProductos] = useState([]);
-  const [order, setOrder] = useState({ items: [] });
   const [searchTerm, setSearchTerm] = useState('');
+  const { order, updateOrder } = useContext(OrderContext);
 
   useEffect(() => {
     const fetchProductos = async () => {
@@ -25,24 +26,24 @@ const Menu = () => {
     fetchProductos();
   }, []);
 
-  useEffect(() => {
-    const storedOrder = JSON.parse(localStorage.getItem('order')) || { items: [] };
-    setOrder(storedOrder);
-  }, [order]);
-
   const handleAddToOrder = (drink) => {
-    if (!order.items.some(item => item.idProduct === drink.idProduct)) {
+    const existingItemIndex = order.items.findIndex(item => item.idProduct === drink.idProduct);
+
+    if (existingItemIndex !== -1) {
+      // Si el producto ya está en la orden, actualiza la cantidad
+      const updatedItems = [...order.items];
+      updatedItems[existingItemIndex].quantity += 1;
+
+      const updatedOrder = { items: updatedItems };
+      updateOrder(updatedOrder);
+      toast.success(`Increased quantity of ${drink.name}!`, { autoClose: 3000 });
+    } else {
+      // Si no está en la orden, añade el producto con cantidad 1
       const newItem = { ...drink, id: drink.idProduct, quantity: 1 };
       const updatedOrder = { items: [...order.items, newItem] };
-  
-      setOrder(updatedOrder);
-      localStorage.setItem('order', JSON.stringify(updatedOrder));
-      toast.success(`adding ${drink.name} to order!`, { autoClose: 3000 } );
-      setTimeout(function(){
-        window.location.reload();
-      }, 2000);
-    } else {
-      toast.info(`${drink.name} is already in the order!`, { autoClose: 3000 });
+
+      updateOrder(updatedOrder);
+      toast.success(`Added ${drink.name} to order!`, { autoClose: 3000 });
     }
   };
 
@@ -78,7 +79,7 @@ const Menu = () => {
         </div>
       </div>
       <div className="right-side">
-        <Order order={order} setOrder={setOrder} />
+        <Order order={order} setOrder={updateOrder} />
       </div>
       <Navbar />
     </div>
