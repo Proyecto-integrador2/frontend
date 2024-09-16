@@ -4,16 +4,15 @@ import './styles.css';
 
 const PendingOrders = () => {
   const [orders, setOrders] = useState([]);
+  const [notifications, setNotifications] = useState([]);
+  const socketRef = React.useRef(null); 
 
   // Función para obtener los pedidos pendientes desde el backend
   const fetchPendingOrders = async () => {
     try {
       const response = await fetch('http://127.0.0.1:8000/api/pedidos/');
       const data = await response.json();
-      // Filtrar solo los pedidos con estado 'pendiente'
-      //const pendingOrders = data.filter(order => order.estado === 'pendiente');
       setOrders(data);
-      console.log(data)
     } catch (error) {
       console.error('Error al obtener pedidos:', error);
     }
@@ -22,15 +21,44 @@ const PendingOrders = () => {
   useEffect(() => {
     fetchPendingOrders();
 
-    // Consultar cada 60 seg
-    const intervalId = setInterval(fetchPendingOrders, 60000);
+    if (!socketRef.current) {
+      socketRef.current = new WebSocket('ws://localhost:8000/ws/notificaciones/');
 
-    return () => clearInterval(intervalId);
+      socketRef.current.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        setNotifications(prevNotifications => [...prevNotifications, data.message]);
+      };
+
+      // Limpiar la conexión WebSocket
+      return () => {
+        if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
+          socketRef.current.close();
+        }
+      };
+    }
   }, []);
+
+// Función para cerrar una notificación
+const handleCloseNotification = (index) => {
+  setNotifications((prevNotifications) => prevNotifications.filter((_, i) => i !== index));
+  console.log(notifications)
+};
 
   return (
     <div className="pending-orders-container">
       <h1 className="title">Control de Pedidos</h1>
+      <div className="notifications-container">
+        {notifications.length > 0 && (
+          <div className="notifications">
+            {notifications.map((notification, index) => (
+              <div key={index} className="notification">
+                <span>{notification}</span>
+                <button onClick={() => handleCloseNotification(index)} className="close-button">X</button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
       <div className="orders-grid">
         {orders.length > 0 ? (
           orders.map((order) => (
