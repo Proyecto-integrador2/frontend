@@ -18,7 +18,8 @@ const Menu = () => {
     const fetchProductos = async () => {
       try {
         const data = await getProductos();
-        setProductos(data);
+        console.log(data.results)
+        setProductos(data.results);
       } catch (error) {
         console.error("Error loading products:", error);
       }
