@@ -19,7 +19,7 @@ function Dashboard() {
       <CssBaseline />
       <AppBar
         position="fixed"
-        sx={{ width: `calc(100% - ${open ? drawerWidth : 56}px)`, ml: `${open ? drawerWidth : 56}px` }}
+        sx={{ width: `calc(100% - ${open ? drawerWidth : 76}px)`, ml: `${open ? drawerWidth : 76}px` }}
       >
         <Toolbar>
           <IconButton color="inherit" aria-label="open drawer" onClick={toggleDrawer} edge="start">
