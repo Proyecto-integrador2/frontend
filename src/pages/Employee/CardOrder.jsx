@@ -52,12 +52,15 @@ const CardOrder = ({ order, onChangeStatus }) => {
               <h4>{detail.producto_nombre}</h4>
               <p>Cantidad: {detail.cantidad}</p>
               {detail.comentarios && <p>Comentarios: {detail.comentarios}</p>}
-              <p className="pedido-fecha">
-                <span className="hora">{hourFormated}</span>  {dateFormated}
-              </p>
             </div>
           </div>
         ))}
+        <p className="pedido-fecha">
+          <span className="hora">{hourFormated}</span>  {dateFormated}
+        </p>
+        <p className="pedido-fecha">
+          <span className="hora">Total:</span>  {order.precio_pedido}
+        </p>
       </div>
       <div className="pedido-footer">
         <button className="estado-btn" onClick={handleStatusChange}>
