@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Box, CssBaseline, Drawer, AppBar, Toolbar, List, ListItem, ListItemIcon, ListItemText, Typography, IconButton, Divider } from '@mui/material';
 import { History, Assessment, Menu } from '@mui/icons-material';
-import { useNavigate, Outlet } from 'react-router-dom'; // Usa Outlet para renderizar rutas internas
+import { useNavigate, Outlet,  useLocation } from 'react-router-dom'; // Usa Outlet para renderizar rutas internas
 import logo from '../../resources/image.png'; 
 
 const drawerWidth = 240;
@@ -9,6 +9,13 @@ const drawerWidth = 240;
 function Dashboard() {
   const [open, setOpen] = useState(true);
   const navigate = useNavigate(); // Usa useNavigate para manejar la navegación
+  const location = useLocation();
+  const [selectedPath, setSelectedPath] = useState(location.pathname);
+
+  const handleNavigation = (path) => {
+    setSelectedPath(path);
+    navigate(path);
+  };
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -35,10 +42,10 @@ function Dashboard() {
       <Drawer
         variant="permanent"
         sx={{
-          width: open ? drawerWidth : 56,
+          width: open ? drawerWidth : 76,
           flexShrink: 0,
           '& .MuiDrawer-paper': {
-            width: open ? drawerWidth : 56,
+            width: open ? drawerWidth : 76,
             boxSizing: 'border-box',
             transition: 'width 0.3s',
           },
@@ -64,7 +71,13 @@ function Dashboard() {
             { text: 'Historial', icon: <History fontSize="large" />, path: '/admin/history' },
             { text: 'Reportes', icon: <Assessment fontSize="large" />, path: '/admin/reportes' },
           ].map((item) => (
-            <ListItem button key={item.text} onClick={() => navigate(item.path)}>
+            <ListItem
+              button
+              key={item.text}
+              onClick={() => handleNavigation(item.path)}
+              selected={selectedPath === item.path}
+              sx={{ cursor: 'pointer' }}
+            >
               <ListItemIcon sx={{ minWidth: '40px' }}>
                 {item.icon}
               </ListItemIcon>

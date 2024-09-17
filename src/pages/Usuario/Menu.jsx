@@ -1,4 +1,3 @@
-// src/pages/Usuario/Menu.jsx
 import React, { useEffect, useState, useContext } from 'react';
 import DrinkItem from '../../components/DrinkItem';
 import { getProductos } from '../../utils/api';
@@ -19,7 +18,7 @@ const Menu = () => {
     const fetchProductos = async () => {
       try {
         const data = await getProductos();
-        setProductos(data.results);
+        setProductos(data);
       } catch (error) {
         console.error("Error loading products:", error);
       }
@@ -31,7 +30,6 @@ const Menu = () => {
     const existingItemIndex = order.items.findIndex(item => item.idProduct === drink.idProduct);
 
     if (existingItemIndex !== -1) {
-      // Si el producto ya está en la orden, actualiza la cantidad
       const updatedItems = [...order.items];
       updatedItems[existingItemIndex].quantity += 1;
 
@@ -39,7 +37,6 @@ const Menu = () => {
       updateOrder(updatedOrder);
       toast.success(`Increased quantity of ${drink.name}!`, { autoClose: 3000 });
     } else {
-      // Si no está en la orden, añade el producto con cantidad 1
       const newItem = { ...drink, id: drink.idProduct, quantity: 1 };
       const updatedOrder = { items: [...order.items, newItem] };
 
@@ -48,7 +45,6 @@ const Menu = () => {
     }
   };
 
-  // Filtrar productos por categoría y búsqueda
   const filteredProductos = productos
     .filter(product =>
       (selectedCategory === 'All' || product.categoria === selectedCategory) &&
