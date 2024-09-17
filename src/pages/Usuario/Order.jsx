@@ -88,6 +88,7 @@ const Order = () => {
       updateOrder({ ...order, items: [] });
       calculateTotal([]);
     } catch (error) {
+      console.error("Ocurrió el siguiente error: ", error.response.data)
       toast.error("Your order couldn't be sent, please try again!");
     }
     

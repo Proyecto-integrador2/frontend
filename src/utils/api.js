@@ -37,3 +37,16 @@ export const getMesaId = async (id) => {
     throw error;
   }
 };
+
+export const patchOrderStatus = async (id, newStatus) => {
+  try {
+    const response = await axios.patch(`http://127.0.0.1:8000/api/pedidos/${id}/`, {
+      estado: newStatus,  // Send the new status
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error updating order status: ", error);
+    throw error;
+  }
+}
