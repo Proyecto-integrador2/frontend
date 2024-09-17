@@ -77,7 +77,8 @@ const Order = () => {
     let orderData = {
       "mesa": tableWithId,
       "estado": "pendiente",
-      "detalles": orderDetails
+      "detalles": orderDetails,
+      "precio_pedido": total
     };
 
     try {

@@ -41,7 +41,6 @@ const PendingOrders = () => {
 // Función para cerrar una notificación
 const handleCloseNotification = (index) => {
   setNotifications((prevNotifications) => prevNotifications.filter((_, i) => i !== index));
-  console.log(notifications)
 };
 
   return (
