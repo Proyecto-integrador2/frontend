@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import CardOrder from './CardOrder';
-import './styles.css'; 
+import React, { useState, useEffect } from "react";
+import CardOrder from "./CardOrder";
+import "./styles.css";
 
 const PendingOrders = () => {
   const [orders, setOrders] = useState([]);
   const [notifications, setNotifications] = useState([]);
-  const socketRef = React.useRef(null); 
+  const socketRef = React.useRef(null);
 
   // Función para obtener los pedidos pendientes desde el backend
   const fetchPendingOrders = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/pedidos/');
+      const response = await fetch("http://127.0.0.1:8000/api/pedidos/");
       const data = await response.json();
       setOrders(data);
     } catch (error) {
-      console.error('Error al obtener pedidos:', error);
+      console.error("Error al obtener pedidos:", error);
     }
   };
 
@@ -22,26 +22,45 @@ const PendingOrders = () => {
     fetchPendingOrders();
 
     if (!socketRef.current) {
-      socketRef.current = new WebSocket('ws://localhost:8000/ws/notificaciones/');
+      socketRef.current = new WebSocket(
+        "ws://localhost:8000/ws/notificaciones/"
+      );
 
-      socketRef.current.onmessage = function(e) {
+      socketRef.current.onmessage = function (e) {
         const data = JSON.parse(e.data);
-        setNotifications(prevNotifications => [...prevNotifications, data.message]);
+        setNotifications((prevNotifications) => [
+          ...prevNotifications,
+          data.message,
+        ]);
       };
 
       // Limpiar la conexión WebSocket
       return () => {
-        if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
+        if (
+          socketRef.current &&
+          socketRef.current.readyState === WebSocket.OPEN
+        ) {
           socketRef.current.close();
         }
       };
     }
   }, []);
 
-// Función para cerrar una notificación
-const handleCloseNotification = (index) => {
-  setNotifications((prevNotifications) => prevNotifications.filter((_, i) => i !== index));
-};
+  // Función para cerrar una notificación
+  const handleCloseNotification = (index) => {
+    setNotifications((prevNotifications) =>
+      prevNotifications.filter((_, i) => i !== index)
+    );
+  };
+
+  // Function to change the order status
+  const handleStatusChange = (orderId, newStatus) => {
+    setOrders((prevOrders) =>
+      prevOrders.map((order) =>
+        order.id_pedido === orderId ? { ...order, estado: newStatus } : order
+      )
+    );
+  };
 
   return (
     <div className="pending-orders-container">
@@ -52,7 +71,12 @@ const handleCloseNotification = (index) => {
             {notifications.map((notification, index) => (
               <div key={index} className="notification">
                 <span>{notification}</span>
-                <button onClick={() => handleCloseNotification(index)} className="close-button">X</button>
+                <button
+                  onClick={() => handleCloseNotification(index)}
+                  className="close-button"
+                >
+                  X
+                </button>
               </div>
             ))}
           </div>
@@ -61,7 +85,11 @@ const handleCloseNotification = (index) => {
       <div className="orders-grid">
         {orders.length > 0 ? (
           orders.map((order) => (
-            <CardOrder key={order.id_pedido} order={order} />
+            <CardOrder
+              key={order.id_pedido}
+              order={order}
+              onChangeStatus={handleStatusChange}
+            />
           ))
         ) : (
           <h1 className="title">No hay pedidos pendientes</h1>

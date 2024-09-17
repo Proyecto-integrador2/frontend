@@ -1,5 +1,6 @@
 import React from 'react';
 import './styles.css'; // Usaremos CSS modules o styled-components si es necesario
+import { patchOrderStatus } from '../../utils/api';
 
 const CardOrder = ({ order, onChangeStatus }) => {
   // Formatear la fecha y la hora
@@ -15,6 +16,8 @@ const CardOrder = ({ order, onChangeStatus }) => {
     } else if (order.estado === 'en_preparacion') {
       newStatus = 'entregado';
     }
+
+    patchOrderStatus(order.id_pedido, newStatus);
     onChangeStatus(order.id_pedido, newStatus);
   };
 
@@ -32,12 +35,28 @@ const CardOrder = ({ order, onChangeStatus }) => {
     }
   };
 
+  const buttonStatusStyle = (status) => {
+    switch (status) {
+      case 'pendiente':
+        return { backgroundColor: '#007bff', color: '#fff' }; // Rojo para pendiente
+      case 'en_preparacion':
+        return { backgroundColor: '#007bff', color: '#fff' }; // Azul para en preparación
+      case 'entregado':
+        return { backgroundColor: '#6c757d', color: '#fff' }; // Verde para entregado
+      default:
+        return { backgroundColor: '#6c757d', color: '#fff' }; // Gris para desconocido
+    }
+  };
+
   return (
     <div className="pedido-card">
       <div className="pedido-header">
         <h2 className="mesa-numero">Mesa {order.mesa_numero} <p className='pedido-fecha'>{order.mesa_ubicacion}</p></h2>
         <span className="estado-label" style={getStatusStyle(order.estado)}>
-          {order.estado}
+          {order.estado === "en_preparacion"
+            ? "En Preparación" 
+            : order.estado
+          }
         </span>
       </div>
       <div className="pedido-content">
@@ -63,7 +82,7 @@ const CardOrder = ({ order, onChangeStatus }) => {
         </p>
       </div>
       <div className="pedido-footer">
-        <button className="estado-btn" onClick={handleStatusChange}>
+        <button className="estado-btn" onClick={handleStatusChange} style={buttonStatusStyle(order.estado)} disabled={order.estado === 'entregado'}>
           {order.estado === 'pendiente'
             ? 'Marcar como En Preparación'
             : order.estado === 'en_preparacion'
