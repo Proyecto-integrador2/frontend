@@ -1,4 +1,4 @@
-// Menu.jsx
+// src/pages/Usuario/Menu.jsx
 import React, { useEffect, useState, useContext } from 'react';
 import DrinkItem from '../../components/DrinkItem';
 import { getProductos } from '../../utils/api';
@@ -6,19 +6,19 @@ import { toast } from 'react-toastify';
 import SearchBar from '../../components/SearchBar';
 import { OrderContext } from '../../context/OrderContext';
 import './Menu.css';
-import Order from './Order'
+import Order from './Order';
 import Navbar from '../../components/Navbar';
 
 const Menu = () => {
   const [productos, setProductos] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('All');
   const { order, updateOrder } = useContext(OrderContext);
 
   useEffect(() => {
     const fetchProductos = async () => {
       try {
         const data = await getProductos();
-        console.log(data.results)
         setProductos(data.results);
       } catch (error) {
         console.error("Error loading products:", error);
@@ -48,9 +48,12 @@ const Menu = () => {
     }
   };
 
-  const filteredProductos = productos.filter(product =>
-    product.nombre.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Filtrar productos por categoría y búsqueda
+  const filteredProductos = productos
+    .filter(product =>
+      (selectedCategory === 'All' || product.categoria === selectedCategory) &&
+      product.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
   return (
     <div className="menu-container">
@@ -60,6 +63,17 @@ const Menu = () => {
             searchTerm={searchTerm}
             onSearchChange={setSearchTerm} 
           />
+          <div className="category-menu">
+            {['All', 'Ordinary Drink', 'Cocktail'].map(category => (
+              <button
+                key={category}
+                className={`category-button ${selectedCategory === category ? 'active' : ''}`}
+                onClick={() => setSelectedCategory(category)}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
         </div>
         <div className="product-list">
           {filteredProductos.length > 0 ? (
